@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trust Debt Audit — Participation Psychology Diagnostic</title>
+<meta name="description" content="A participation psychology diagnostic for digital systems. Audit how your product experience shapes trust.">
+<meta property="og:title" content="Trust Debt Audit · Dr. Larysa King">
+<meta property="og:description" content="Trust is behavioral and accumulative. Audit the participation cost of your product, step by step.">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:       #0D0D0D;
+  --charcoal:  #3C3631;
+  --warm-gray: #4A4440;
+  --stone:     #9A9086;
+  --mist:      #D8D4CE;
+  --parchment: #F2EDE4;
+  --white:     #FFFFFF;
+  --brick:     #C0503A;
+  --steel:     #2E6FA8;
+  --teal:      #2E8B6F;
+  --violet:    #8A6BAE;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== HEADER ===== */
+.app-header {
+  background: var(--white);
+  border-bottom: 1.5px solid var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 0 28px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone); margin-bottom: 1px; }
+.brand-name { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; }
+
+.header-center { flex: 1; max-width: 260px; }
+
+.journey-name-field {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--mist);
+  padding: 4px 0;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.journey-name-field:focus { border-bottom-color: var(--ink); }
+.journey-name-field::placeholder { color: var(--stone); }
+
+.header-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+.btn {
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--mist);
+  background: var(--white);
+  color: var(--stone);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--ink); color: var(--ink); background: var(--parchment); }
+
+/* ===== LAYOUT ===== */
+.layout {
+  display: grid;
+  grid-template-columns: 296px 1fr;
+  min-height: calc(100vh - 64px);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  background: var(--parchment);
+  border-right: 1px solid var(--mist);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  overflow-y: auto;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+}
+
+.sidebar-section { display: flex; flex-direction: column; gap: 11px; }
+
+.section-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--stone);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--mist);
+}
+
+.balance-number { font-size: 58px; font-weight: 700; line-height: 1; letter-spacing: -4px; color: var(--ink); transition: color 0.35s; }
+.balance-subtitle { font-size: 12px; color: var(--stone); margin-top: 4px; margin-bottom: 14px; }
+
+.gauge-track { height: 6px; background: linear-gradient(to right, var(--brick) 0%, var(--mist) 50%, var(--teal) 100%); position: relative; }
+.gauge-pointer { position: absolute; top: -5px; width: 16px; height: 16px; border-radius: 50%; background: var(--ink); transform: translateX(-50%); transition: left 0.45s cubic-bezier(0.34,1.56,0.64,1); }
+.gauge-labels { display: flex; justify-content: space-between; font-size: 9px; letter-spacing: 0.06em; color: var(--stone); margin-top: 8px; }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--mist); border: 1px solid var(--mist); }
+.stat-card { background: var(--parchment); padding: 10px 12px; }
+.stat-card-label { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--stone); margin-bottom: 4px; }
+.stat-card-value { font-size: 12px; font-weight: 700; color: var(--ink); line-height: 1.3; word-break: break-word; }
+
+.friction-list { display: flex; flex-direction: column; gap: 6px; }
+.friction-item {
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-left: 3px solid var(--brick);
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.friction-name { font-size: 12px; color: var(--ink); }
+.friction-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.friction-score { font-size: 12px; font-weight: 700; color: var(--brick); }
+.friction-dots { display: flex; gap: 3px; }
+.fdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+.empty-hint { font-size: 12px; color: var(--stone); font-style: italic; line-height: 1.5; }
+
+/* Dimension risk */
+.dim-risk-list { display: flex; flex-direction: column; gap: 8px; }
+.dim-risk-item { display: flex; flex-direction: column; gap: 4px; }
+.dim-risk-header { display: flex; justify-content: space-between; align-items: center; }
+.dim-risk-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.dim-risk-count { font-size: 10px; color: var(--stone); }
+.dim-risk-bar-track { height: 4px; background: var(--mist); border-radius: 0; overflow: hidden; }
+.dim-risk-bar-fill { height: 100%; border-radius: 0; transition: width 0.4s; }
+
+.dim-legend { display: flex; flex-direction: column; gap: 10px; }
+.dim-legend-item { display: flex; gap: 10px; align-items: flex-start; }
+.dim-bar { width: 3px; min-height: 34px; flex-shrink: 0; margin-top: 1px; }
+.dim-legend-name { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; color: var(--ink); text-transform: uppercase; margin-bottom: 2px; }
+.dim-legend-desc { font-size: 11px; color: var(--stone); line-height: 1.4; }
+
+/* ===== MAIN ===== */
+.main { padding: 32px 36px; overflow-y: auto; max-width: 860px; }
+
+.main-hero { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--mist); }
+.hero-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone); margin-bottom: 10px; }
+.main-hero h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 10px; line-height: 1.2; }
+.main-hero p { font-size: 13px; color: var(--warm-gray); max-width: 520px; line-height: 1.7; }
+
+.how-box {
+  border: 1px solid var(--mist);
+  border-left: 3px solid var(--ink);
+  padding: 12px 16px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--warm-gray);
+  line-height: 1.7;
+}
+.how-box strong { color: var(--ink); }
+
+/* ===== CHART ===== */
+.chart-section {
+  margin-bottom: 20px;
+  border: 1px solid var(--mist);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--white);
+}
+.chart-section svg { display: block; width: 100%; height: auto; }
+.chart-empty { padding: 44px 24px; text-align: center; font-size: 12px; color: var(--stone); font-style: italic; }
+
+
+/* ===== STEPS ===== */
+.steps-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.steps-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: var(--stone); }
+.steps-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--stone); border: 1px solid var(--mist); padding: 2px 10px; }
+
+.steps-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+.no-steps-state { text-align: center; padding: 56px 24px; color: var(--stone); border: 1px dashed var(--mist); }
+.no-steps-state p { font-size: 13px; color: var(--stone); }
+
+/* ===== STEP CARD ===== */
+.step-card {
+  background: var(--parchment);
+  border: 1px solid var(--mist);
+  border-left: 4px solid var(--mist);
+  border-radius: 10px;
+  padding: 18px 20px;
+  transition: border-color 0.2s, opacity 0.2s;
+  cursor: default;
+}
+.step-card.sc-trust  { border-left-color: var(--teal); }
+.step-card.sc-strust { border-left-color: #67b898; }
+.step-card.sc-neutral { border-left-color: var(--mist); }
+.step-card.sc-sdebt  { border-left-color: #d07c69; }
+.step-card.sc-debt   { border-left-color: var(--brick); }
+.step-card.drag-over { border-color: var(--ink) !important; background: #ede8df; }
+.step-card.dragging  { opacity: 0.4; }
+
+.step-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+
+.drag-handle {
+  cursor: grab;
+  color: var(--mist);
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 8px;
+  user-select: none;
+  padding: 2px 0;
+  transition: color 0.15s;
+}
+.drag-handle:hover { color: var(--stone); }
+.drag-handle:active { cursor: grabbing; }
+
+.step-num-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.step-fields { flex: 1; min-width: 0; }
+
+.step-name-input {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  outline: none;
+  padding: 0 0 3px 0;
+  transition: border-color 0.15s;
+  line-height: 1.3;
+}
+.step-name-input:focus { border-bottom-color: var(--mist); }
+.step-name-input::placeholder { color: var(--mist); font-weight: 400; }
+
+.step-desc-input {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: var(--warm-gray);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  padding: 4px 0 2px 0;
+  resize: none;
+  overflow: hidden;
+  transition: border-color 0.15s;
+  line-height: 1.5;
+  min-height: 22px;
+}
+.step-desc-input:focus { border-bottom-color: var(--mist); }
+.step-desc-input::placeholder { color: var(--stone); }
+
+.step-del {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--mist);
+  font-size: 18px;
+  line-height: 1;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+  flex-shrink: 0;
+  font-family: inherit;
+  margin-top: 2px;
+}
+.step-del:hover { color: var(--brick); }
+
+.step-divider { height: 1px; background: var(--mist); margin: 14px 0; }
+
+.dims-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.dims-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--stone); }
+.dims-count-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: var(--stone); }
+
+.dims-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+
+.dim-chip {
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1.5px solid var(--mist);
+  background: transparent;
+  color: var(--stone);
+  transition: all 0.15s;
+  user-select: none;
+}
+.dim-chip:hover:not(.dc-off) { border-color: var(--stone); color: var(--ink); }
+.dim-chip.dc-on { color: var(--white); border-color: transparent; }
+.dim-chip.dc-off { opacity: 0.3; cursor: not-allowed; }
+
+.dim-score-rows { display: flex; flex-direction: column; gap: 8px; }
+.dim-score-row { background: var(--white); border: 1px solid var(--mist); border-radius: 8px; padding: 12px 14px; }
+.dim-score-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.dim-score-name { font-size: 13px; font-weight: 600; }
+.dim-score-word { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.dim-score-word.pos { color: var(--teal); }
+.dim-score-word.neg { color: var(--brick); }
+.dim-score-word.zer { color: var(--stone); }
+
+.score-btns { display: flex; gap: 5px; }
+.score-btn {
+  width: 42px;
+  height: 36px;
+  border: 1px solid var(--mist);
+  background: var(--white);
+  color: var(--stone);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.12s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+.score-btn:hover { border-color: var(--stone); color: var(--ink); }
+.score-btn.sb-pos { background: var(--teal);  border-color: var(--teal);  color: var(--white); }
+.score-btn.sb-neg { background: var(--brick); border-color: var(--brick); color: var(--white); }
+.score-btn.sb-zer { background: var(--ink);   border-color: var(--ink);   color: var(--white); }
+
+.add-step-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px;
+  border: 1px dashed var(--mist);
+  background: transparent;
+  color: var(--stone);
+  font-family: inherit; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.add-step-btn:hover { border-color: var(--ink); color: var(--ink); background: var(--parchment); }
+
+/* ===== FOOTER ===== */
+.app-footer {
+  background: var(--parchment);
+  border-top: 1px solid var(--mist);
+  padding: 18px 36px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.footer-credit { font-size: 11px; color: var(--stone); }
+.footer-credit strong { color: var(--ink); }
+.footer-credit a { color: var(--stone); text-decoration: none; border-bottom: 1px solid var(--mist); }
+.footer-credit a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+.footer-rule { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); }
+
+/* ===== PRINT ===== */
+@media print {
+  .app-header .header-actions,
+  .drag-handle,
+  .step-del,
+  .dims-chips,
+  .score-btns,
+  .add-step-btn,
+  .how-box { display: none !important; }
+
+  .app-header { position: static; border-bottom: 1.5px solid #0D0D0D; }
+  .layout { display: block; }
+  .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid #D8D4CE; flex-direction: row; flex-wrap: wrap; gap: 16px; }
+  .sidebar-section { min-width: 140px; }
+  .main { padding: 20px; }
+  .step-card { page-break-inside: avoid; }
+  .dim-score-row { background: #F2EDE4 !important; }
+  .chart-section { page-break-after: avoid; }
+}
+
+@media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--mist); }
+  .header-center { display: none; }
+  .main { padding: 24px 20px; }
+  .score-btns { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-brand">
+    <div class="brand-eyebrow">Dr. Larysa King</div>
+    <div class="brand-name">Trust Debt Audit</div>
+  </div>
+  <div class="header-center">
+    <input class="journey-name-field" id="journeyName" type="text" value="Untitled Journey"
+      placeholder="Name your journey…" oninput="onJourneyName()">
+  </div>
+  <div class="header-actions">
+    <button class="btn" id="copyBtn" onclick="copySummary()">Copy</button>
+    <button class="btn" onclick="window.print()">Print</button>
+    <button class="btn" onclick="loadSample()">Sample</button>
+    <button class="btn" onclick="resetAll()">Reset</button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+
+    <div class="sidebar-section">
+      <div class="section-label">Trust Balance</div>
+      <div class="balance-number" id="balanceNum">0</div>
+      <div class="balance-subtitle" id="balanceSubtitle">—</div>
+      <div style="position:relative;">
+        <div class="gauge-track">
+          <div class="gauge-pointer" id="gaugePointer" style="left:50%"></div>
+        </div>
+        <div class="gauge-labels">
+          <span>−6 debt</span><span>0</span><span>+6 trust</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="section-label">Journey Profile</div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-label">Strongest</div>
+          <div class="stat-card-value" id="statBest">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Weakest</div>
+          <div class="stat-card-value" id="statWorst">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Steps</div>
+          <div class="stat-card-value" id="statCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Friction Points</div>
+          <div class="stat-card-value" id="statFrictionCount">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="section-label">Top Friction Points</div>
+      <div id="frictionList" class="friction-list">
+        <div class="empty-hint">No friction points yet. Score steps below zero to surface them here.</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section" id="dimRiskSection" style="display:none">
+      <div class="section-label">Dimension Risk</div>
+      <div class="dim-risk-list" id="dimRiskList"></div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="section-label">Trust Debt Dimensions</div>
+      <div class="dim-legend">
+        <div class="dim-legend-item">
+          <div class="dim-bar" style="background:#2E6FA8"></div>
+          <div><div class="dim-legend-name">01 · Reliability</div><div class="dim-legend-desc">Users trust that the system will do what it is supposed to do.</div></div>
+        </div>
+        <div class="dim-legend-item">
+          <div class="dim-bar" style="background:#8A6BAE"></div>
+          <div><div class="dim-legend-name">02 · Fairness</div><div class="dim-legend-desc">Users trust that they will be treated fairly.</div></div>
+        </div>
+        <div class="dim-legend-item">
+          <div class="dim-bar" style="background:#2E8B6F"></div>
+          <div><div class="dim-legend-name">03 · Transparency</div><div class="dim-legend-desc">Users understand what is happening and why.</div></div>
+        </div>
+        <div class="dim-legend-item">
+          <div class="dim-bar" style="background:#C0503A"></div>
+          <div><div class="dim-legend-name">04 · Agency</div><div class="dim-legend-desc">Users feel in control and not manipulated by the system.</div></div>
+        </div>
+        <div class="dim-legend-item">
+          <div class="dim-bar" style="background:#3C3631"></div>
+          <div><div class="dim-legend-name">05 · Belonging</div><div class="dim-legend-desc">Users believe people like them belong and can succeed here.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <main class="main">
+
+    <div class="main-hero">
+      <div class="hero-eyebrow">Participation Psychology Diagnostic</div>
+      <h2>Audit how your product experience shapes trust.</h2>
+      <p>The Trust Debt Audit helps teams evaluate how onboarding flows, AI experiences, personalization systems, and user journeys shape confidence and participation trust over time.</p>
+      <div class="how-box">
+        <strong>How the audit works.</strong> Add each step of your user journey with a name and description. Select up to two trust dimensions, then score each dimension from −3 (high friction) to +3 (high trust). The Trust Balance and curve update automatically.
+      </div>
+    </div>
+
+    <div class="chart-section" id="chartSection">
+      <div class="chart-empty">Add at least 2 journey steps to see the trust curve.</div>
+    </div>
+
+    <div class="steps-header">
+      <div class="steps-title">The Journey</div>
+      <div class="steps-badge" id="stepsCount">0 steps</div>
+    </div>
+
+    <div class="steps-list" id="stepsList">
+      <div class="no-steps-state">
+        <p>Add your first journey step to begin the audit.</p>
+      </div>
+    </div>
+
+    <button class="add-step-btn" onclick="addStep()">+ Add journey step</button>
+
+  </main>
+</div>
+
+<footer class="app-footer">
+  <div class="footer-credit">
+    By <strong>Dr. Larysa King</strong> · Human-Centered AI &amp; Behavioral Systems Strategist ·
+    <a href="https://linkedin.com/in/drlarysaking" target="_blank" rel="noopener">linkedin.com/in/drlarysaking</a>
+  </div>
+  <div class="footer-rule">Participation Psychology</div>
+</footer>
+
+<script>
+/* ===================== DATA ===================== */
+
+const DIMS = [
+  { id: 'reliability',  label: 'Reliability',  color: '#2E6FA8' },
+  { id: 'fairness',     label: 'Fairness',      color: '#8A6BAE' },
+  { id: 'transparency', label: 'Transparency',  color: '#2E8B6F' },
+  { id: 'agency',       label: 'Agency',        color: '#C0503A' },
+  { id: 'belonging',    label: 'Belonging',     color: '#3C3631' },
+];
+
+const SCORE_WORDS = {
+  '-3': 'High Friction', '-2': 'Friction', '-1': 'Slight Friction',
+  '0': 'Neutral', '1': 'Slightly Builds Trust', '2': 'Builds Trust', '3': 'High Trust',
+};
+
+const SCORE_VALS = [-3, -2, -1, 0, 1, 2, 3];
+
+let steps = [];
+let uid   = 1;
+let dragSrcIdx = null;
+
+/* ===================== HELPERS ===================== */
+
+function selectedDims(step) { return Object.keys(step.dimScores); }
+
+function stepScore(step) {
+  const vals = Object.values(step.dimScores);
+  if (!vals.length) return 0;
+  return vals.reduce((a, b) => a + b, 0) / vals.length;
+}
+
+function calcBalance() {
+  if (!steps.length) return 0;
+  const avg = steps.reduce((s, x) => s + stepScore(x), 0) / steps.length;
+  return Math.round(Math.max(-6, Math.min(6, avg * 2)) * 10) / 10;
+}
+
+function profileLabel(b) {
+  if (b >= 4)  return 'High Trust';
+  if (b >= 2)  return 'Growing Trust';
+  if (b > -1)  return 'Equilibrium';
+  if (b >= -3) return 'Emerging Debt';
+  return               'Trust Deficit';
+}
+
+function profileColor(b) {
+  if (b > 0.1)  return '#2E8B6F';
+  if (b < -0.1) return '#C0503A';
+  return                '#9A9086';
+}
+
+function cardClass(score) {
+  if (score >= 2)  return 'sc-trust';
+  if (score > 0)   return 'sc-strust';
+  if (score === 0) return 'sc-neutral';
+  if (score >= -1) return 'sc-sdebt';
+  return 'sc-debt';
+}
+
+function wordClass(score) {
+  return score > 0 ? 'pos' : score < 0 ? 'neg' : 'zer';
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function numBadge(idx) {
+  return String(idx + 1).padStart(2, '0');
+}
+
+/* ===================== PERSISTENCE ===================== */
+
+function saveState() {
+  try {
+    localStorage.setItem('tda_v1', JSON.stringify({
+      journeyName: document.getElementById('journeyName').value,
+      steps, uid
+    }));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem('tda_v1');
+    if (!raw) return false;
+    const saved = JSON.parse(raw);
+    document.getElementById('journeyName').value = saved.journeyName || 'Untitled Journey';
+    steps = saved.steps || [];
+    uid   = saved.uid   || 1;
+    return true;
+  } catch(e) { return false; }
+}
+
+
+/* ===================== DIMENSION RISK ===================== */
+
+function getDimRisk() {
+  const risk = {};
+  DIMS.forEach(d => { risk[d.id] = { neg: 0, total: 0 }; });
+  steps.forEach(step => {
+    Object.entries(step.dimScores).forEach(([id, score]) => {
+      if (risk[id]) { risk[id].total++; if (score < 0) risk[id].neg++; }
+    });
+  });
+  return DIMS
+    .map(d => ({ ...d, ...risk[d.id] }))
+    .filter(d => d.total > 0)
+    .sort((a, b) => b.neg - a.neg || b.total - a.total);
+}
+
+function renderDimRisk() {
+  const section = document.getElementById('dimRiskSection');
+  const list    = document.getElementById('dimRiskList');
+  const risk    = getDimRisk();
+  if (!risk.length) { section.style.display = 'none'; return; }
+  section.style.display = '';
+  const maxNeg = Math.max(1, ...risk.map(d => d.neg));
+  list.innerHTML = risk.map(d => {
+    const pct = (d.neg / maxNeg) * 100;
+    const label = d.neg === 0
+      ? `${d.total} step${d.total > 1 ? 's' : ''}, no friction`
+      : `${d.neg} of ${d.total} step${d.total > 1 ? 's' : ''} in friction`;
+    return `<div class="dim-risk-item">
+      <div class="dim-risk-header">
+        <span class="dim-risk-name" style="color:${d.color}">${d.label}</span>
+        <span class="dim-risk-count">${label}</span>
+      </div>
+      ${d.neg > 0 ? `<div class="dim-risk-bar-track">
+        <div class="dim-risk-bar-fill" style="width:${pct}%;background:${d.color};opacity:0.7"></div>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+/* ===================== CHART ===================== */
+
+function renderChart() {
+  const container = document.getElementById('chartSection');
+  if (!container) return;
+
+  const scored = steps.filter(s => Object.keys(s.dimScores).length > 0);
+  if (scored.length < 2) {
+    container.innerHTML = '<div class="chart-empty">Add at least 2 scored journey steps to see the trust curve.</div>';
+    return;
+  }
+
+  let cum = 0;
+  const data = steps.map((step, i) => {
+    cum += stepScore(step);
+    return { i, x: i + 1, y: Math.round(cum * 100) / 100, step };
+  });
+
+  const VW = 800, VH = 260;
+  const PAD = { top: 40, right: 28, bottom: 36, left: 52 };
+  const cW  = VW - PAD.left - PAD.right;
+  const cH  = VH - PAD.top  - PAD.bottom;
+
+  const yVals    = data.map(d => d.y);
+  const dataMin  = Math.min(0, ...yVals);
+  const dataMax  = Math.max(0, ...yVals);
+  const yStep    = 3;
+  const yMinNice = Math.floor((dataMin - 1.5) / yStep) * yStep;
+  const yMaxNice = Math.ceil( (dataMax + 1.5) / yStep) * yStep;
+
+  const xS = n => PAD.left + ((n - 1) / Math.max(steps.length - 1, 1)) * cW;
+  const yS = v => PAD.top  + cH - ((v - yMinNice) / (yMaxNice - yMinNice)) * cH;
+  const y0 = yS(0);
+  const pts = data.map(d => [xS(d.x), yS(d.y)]);
+
+  function spline(points, t = 0.4) {
+    let d = `M ${points[0][0]} ${points[0][1]}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[Math.max(0, i-1)], p1 = points[i], p2 = points[i+1], p3 = points[Math.min(points.length-1, i+2)];
+      const c1x = p1[0]+(p2[0]-p0[0])*t, c1y = p1[1]+(p2[1]-p0[1])*t;
+      const c2x = p2[0]-(p3[0]-p1[0])*t, c2y = p2[1]-(p3[1]-p1[1])*t;
+      d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)},${c2x.toFixed(1)} ${c2y.toFixed(1)},${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+    }
+    return d;
+  }
+
+  function area(points, yz, t = 0.4) {
+    let d = `M ${points[0][0].toFixed(1)} ${yz.toFixed(1)} L ${points[0][0].toFixed(1)} ${points[0][1].toFixed(1)}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[Math.max(0, i-1)], p1 = points[i], p2 = points[i+1], p3 = points[Math.min(points.length-1, i+2)];
+      const c1x = p1[0]+(p2[0]-p0[0])*t, c1y = p1[1]+(p2[1]-p0[1])*t;
+      const c2x = p2[0]-(p3[0]-p1[0])*t, c2y = p2[1]-(p3[1]-p1[1])*t;
+      d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)},${c2x.toFixed(1)} ${c2y.toFixed(1)},${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+    }
+    return d + ` L ${points[points.length-1][0].toFixed(1)} ${yz.toFixed(1)} Z`;
+  }
+
+  const linePth = spline(pts);
+  const areaPth = area(pts, y0);
+  const yLines  = [];
+  for (let y = yMinNice; y <= yMaxNice; y += yStep) yLines.push(y);
+  const jName = (document.getElementById('journeyName')?.value || 'Untitled Journey').toUpperCase();
+
+  container.innerHTML = `<svg viewBox="0 0 ${VW} ${VH}" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+  <defs>
+    <clipPath id="ca"><rect x="${PAD.left}" y="${PAD.top}" width="${cW}" height="${Math.max(0, y0-PAD.top)}"/></clipPath>
+    <clipPath id="cb"><rect x="${PAD.left}" y="${y0.toFixed(1)}" width="${cW}" height="${Math.max(0, PAD.top+cH-y0)}"/></clipPath>
+  </defs>
+  <text x="${PAD.left}" y="22" font-family="Helvetica,Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="3" fill="#9A9086">${esc(jName)}</text>
+  ${yLines.map(y => {
+    const sy = yS(y).toFixed(1), isZ = y===0;
+    return `<line x1="${PAD.left}" y1="${sy}" x2="${PAD.left+cW}" y2="${sy}" stroke="${isZ?'#9A9086':'#D8D4CE'}" stroke-width="${isZ?1:0.5}" stroke-dasharray="${isZ?'5,4':''}"/>
+    <text x="${PAD.left-8}" y="${(parseFloat(sy)+4).toFixed(1)}" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#9A9086" text-anchor="end">${y}</text>`;
+  }).join('\n  ')}
+  <path d="${areaPth}" fill="#2E8B6F" opacity="0.12" clip-path="url(#ca)"/>
+  <path d="${areaPth}" fill="#C0503A" opacity="0.12" clip-path="url(#cb)"/>
+  <path d="${linePth}" fill="none" stroke="#2E8B6F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  ${data.map((d,i) => `<text x="${pts[i][0].toFixed(1)}" y="${(PAD.top+cH+18).toFixed(1)}" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#9A9086" text-anchor="middle">${d.x}</text>`).join('\n  ')}
+  <rect id="cho" x="${PAD.left}" y="${PAD.top}" width="${cW}" height="${cH}" fill="transparent" style="cursor:crosshair"/>
+  <g id="chg" opacity="0" pointer-events="none">
+    <line id="chl" x1="0" y1="${PAD.top}" x2="0" y2="${PAD.top+cH}" stroke="#9A9086" stroke-width="1"/>
+    <circle id="chd" cx="0" cy="0" r="5" fill="#2E8B6F" stroke="white" stroke-width="2"/>
+    <g id="cht">
+      <rect id="chtr" rx="8" fill="white" stroke="#D8D4CE" stroke-width="1"/>
+      <text id="chtn" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#0D0D0D"/>
+      <text id="chtc" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#9A9086"/>
+    </g>
+  </g>
+</svg>`;
+
+  const svgEl = container.querySelector('svg');
+  const cho = document.getElementById('cho');
+  const chg = document.getElementById('chg');
+  const chl = document.getElementById('chl');
+  const chd = document.getElementById('chd');
+  const chtr= document.getElementById('chtr');
+  const chtn= document.getElementById('chtn');
+  const chtc= document.getElementById('chtc');
+
+  cho.addEventListener('mousemove', e => {
+    const rect = svgEl.getBoundingClientRect();
+    const mx   = (e.clientX - rect.left) / rect.width * VW;
+    let best = 0, bestD = Infinity;
+    pts.forEach(([px], i) => { const d = Math.abs(px-mx); if (d<bestD){bestD=d;best=i;} });
+    const d = data[best], px = pts[best][0], py = pts[best][1];
+    chg.setAttribute('opacity','1');
+    chl.setAttribute('x1',px.toFixed(1)); chl.setAttribute('x2',px.toFixed(1));
+    chd.setAttribute('cx',px.toFixed(1)); chd.setAttribute('cy',py.toFixed(1));
+    chd.setAttribute('fill', d.y >= 0 ? '#2E8B6F' : '#C0503A');
+    const name = (d.step.name || `Step ${d.x}`).slice(0, 40);
+    const cumLabel = `Cumulative: ${d.y > 0 ? '+' : ''}${d.y.toFixed(1)}`;
+    chtn.textContent = name; chtc.textContent = cumLabel;
+    const TW = Math.max(name.length * 7.2 + 24, 160), TH = 52;
+    let tx = px + 12; if (tx + TW > VW - 10) tx = px - TW - 12;
+    let ty = py - 20; if (ty < PAD.top) ty = py + 14;
+    chtr.setAttribute('x',tx); chtr.setAttribute('y',ty);
+    chtr.setAttribute('width',TW); chtr.setAttribute('height',TH);
+    chtn.setAttribute('x',tx+12); chtn.setAttribute('y',ty+20);
+    chtc.setAttribute('x',tx+12); chtc.setAttribute('y',ty+38);
+  });
+
+  cho.addEventListener('mouseleave', () => chg.setAttribute('opacity','0'));
+}
+
+/* ===================== SIDEBAR ===================== */
+
+function updateSidebar() {
+  const b   = calcBalance();
+  const col = profileColor(b);
+
+  const numEl = document.getElementById('balanceNum');
+  numEl.textContent = steps.length ? (b > 0 ? '+' + b : String(b)) : '0';
+  numEl.style.color = steps.length ? col : '';
+
+  document.getElementById('balanceSubtitle').textContent = steps.length ? profileLabel(b) : '—';
+
+  const pct = ((b + 6) / 12) * 100;
+  document.getElementById('gaugePointer').style.left = Math.max(0, Math.min(100, pct)) + '%';
+
+  const best  = steps.length ? steps.reduce((a, x) => stepScore(x) > stepScore(a) ? x : a) : null;
+  const worst = steps.length ? steps.reduce((a, x) => stepScore(x) < stepScore(a) ? x : a) : null;
+
+  document.getElementById('statBest').textContent  = best  ? (best.name  || '(unnamed)') : '—';
+  document.getElementById('statWorst').textContent = worst ? (worst.name || '(unnamed)') : '—';
+  document.getElementById('statCount').textContent = steps.length;
+
+  const frictionCount = steps.filter(s => stepScore(s) < 0).length;
+  const fcEl = document.getElementById('statFrictionCount');
+  fcEl.textContent = frictionCount;
+  fcEl.style.color = frictionCount > 0 ? '#C0503A' : '';
+
+  // Friction list
+  const frictions = steps.filter(s => stepScore(s) < 0).sort((a,c) => stepScore(a)-stepScore(c)).slice(0,3);
+  const fl = document.getElementById('frictionList');
+  if (!frictions.length) {
+    fl.innerHTML = '<div class="empty-hint">No friction points yet. Score steps below zero to surface them here.</div>';
+  } else {
+    fl.innerHTML = frictions.map(s => {
+      const dots = selectedDims(s).map(d => {
+        const dim = DIMS.find(x => x.id === d);
+        return dim ? `<span class="fdot" style="background:${dim.color}" title="${dim.label}"></span>` : '';
+      }).join('');
+      const sc = Math.round(stepScore(s) * 10) / 10;
+      return `<div class="friction-item">
+        <div class="friction-name">${esc(s.name || '(unnamed)')}</div>
+        <div class="friction-right"><div class="friction-dots">${dots}</div><div class="friction-score">${sc}</div></div>
+      </div>`;
+    }).join('');
+  }
+
+  renderDimRisk();
+  renderChart();
+  saveState();
+}
+
+/* ===================== STEP RENDER ===================== */
+
+function dimChipsHTML(step) {
+  const sel = selectedDims(step);
+  return DIMS.map(dim => {
+    const on  = sel.includes(dim.id);
+    const off = !on && sel.length >= 2;
+    let cls = 'dim-chip' + (on ? ' dc-on' : '') + (off ? ' dc-off' : '');
+    const style  = on ? `background:${dim.color};` : '';
+    const handler= off ? '' : `onclick="toggleDim(${step.id},'${dim.id}')"`;
+    return `<span class="${cls}" style="${style}" ${handler}>${dim.label}</span>`;
+  }).join('');
+}
+
+function dimScoreRowsHTML(step) {
+  const sel = selectedDims(step);
+  if (!sel.length) return '';
+  return sel.map(dimId => {
+    const dim   = DIMS.find(d => d.id === dimId);
+    const score = step.dimScores[dimId];
+    const wc    = wordClass(score);
+    const word  = SCORE_WORDS[String(score)] || 'Neutral';
+    const btns  = SCORE_VALS.map(v => {
+      let cls = 'score-btn';
+      if (v === score) cls += v > 0 ? ' sb-pos' : v < 0 ? ' sb-neg' : ' sb-zer';
+      return `<button class="${cls}" onclick="setDimScore(${step.id},'${dimId}',${v})">${v > 0 ? '+' : ''}${v}</button>`;
+    }).join('');
+    return `<div class="dim-score-row" id="dsr-${step.id}-${dimId}">
+      <div class="dim-score-header">
+        <div class="dim-score-name" style="color:${dim.color}">${dim.label}</div>
+        <div class="dim-score-word ${wc}" id="dsw-${step.id}-${dimId}">${word}</div>
+      </div>
+      <div class="score-btns" id="dsb-${step.id}-${dimId}">${btns}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderStepHTML(step, idx) {
+  const sc = stepScore(step);
+  return `<div class="step-card ${cardClass(sc)}" id="sc-${step.id}" draggable="true" data-idx="${idx}">
+    <div class="step-top">
+      <span class="drag-handle" title="Drag to reorder">⠿</span>
+      <div class="step-num-badge">${numBadge(idx)}</div>
+      <div class="step-fields">
+        <input class="step-name-input" type="text" value="${esc(step.name)}"
+          placeholder="Step name…" oninput="onName(${step.id},this.value)">
+        <textarea class="step-desc-input" rows="1"
+          placeholder="Brief description of this step…"
+          oninput="autoResize(this);onDesc(${step.id},this.value)">${esc(step.desc)}</textarea>
+      </div>
+      <button class="step-del" onclick="deleteStep(${step.id})" title="Remove">×</button>
+    </div>
+    <div class="step-divider"></div>
+    <div class="dims-header">
+      <div class="dims-label">Dimensions Affected</div>
+      <div class="dims-count-badge" id="dcnt-${step.id}">${selectedDims(step).length} / 2</div>
+    </div>
+    <div class="dims-chips" id="dchips-${step.id}">${dimChipsHTML(step)}</div>
+    <div class="dim-score-rows" id="dsrows-${step.id}">${dimScoreRowsHTML(step)}</div>
+  </div>`;
+}
+
+function renderSteps() {
+  const list = document.getElementById('stepsList');
+  const cnt  = document.getElementById('stepsCount');
+  cnt.textContent = `${steps.length} step${steps.length !== 1 ? 's' : ''}`;
+  if (!steps.length) {
+    list.innerHTML = `<div class="no-steps-state"><p>Add your first journey step to begin the audit.</p></div>`;
+    return;
+  }
+  list.innerHTML = steps.map((s, i) => renderStepHTML(s, i)).join('');
+  document.querySelectorAll('.step-desc-input').forEach(autoResize);
+  initDragDrop();
+}
+
+/* ===================== DRAG & DROP ===================== */
+
+function initDragDrop() {
+  document.querySelectorAll('.step-card[data-idx]').forEach(card => {
+    card.addEventListener('dragstart', e => {
+      dragSrcIdx = parseInt(card.dataset.idx);
+      e.dataTransfer.effectAllowed = 'move';
+      setTimeout(() => card.classList.add('dragging'), 0);
+    });
+    card.addEventListener('dragend', () => {
+      card.classList.remove('dragging');
+      document.querySelectorAll('.step-card').forEach(c => c.classList.remove('drag-over'));
+    });
+    card.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('.step-card').forEach(c => c.classList.remove('drag-over'));
+      card.classList.add('drag-over');
+    });
+    card.addEventListener('dragleave', e => {
+      if (!card.contains(e.relatedTarget)) card.classList.remove('drag-over');
+    });
+    card.addEventListener('drop', e => {
+      e.preventDefault();
+      const dropIdx = parseInt(card.dataset.idx);
+      if (dragSrcIdx !== null && dragSrcIdx !== dropIdx) {
+        const [moved] = steps.splice(dragSrcIdx, 1);
+        steps.splice(dropIdx, 0, moved);
+        renderSteps();
+        updateSidebar();
+      }
+      dragSrcIdx = null;
+      document.querySelectorAll('.step-card').forEach(c => c.classList.remove('drag-over'));
+    });
+  });
+}
+
+/* ===================== ACTIONS ===================== */
+
+function addStep(data) {
+  const id = uid++;
+  steps.push(data ? { id, ...data } : { id, name: '', desc: '', dimScores: {} });
+  renderSteps();
+  updateSidebar();
+  if (!data) {
+    const input = document.querySelector(`#sc-${id} .step-name-input`);
+    if (input) input.focus();
+  }
+}
+
+function deleteStep(id) {
+  steps = steps.filter(s => s.id !== id);
+  renderSteps();
+  updateSidebar();
+}
+
+function onName(id, val) {
+  const s = steps.find(x => x.id === id);
+  if (s) s.name = val;
+  updateSidebar();
+}
+
+function onDesc(id, val) {
+  const s = steps.find(x => x.id === id);
+  if (s) s.desc = val;
+  saveState();
+}
+
+function onJourneyName() {
+  renderChart();
+  saveState();
+}
+
+function toggleDim(stepId, dimId) {
+  const s   = steps.find(x => x.id === stepId);
+  if (!s) return;
+  const sel = selectedDims(s);
+  if (sel.includes(dimId)) { delete s.dimScores[dimId]; }
+  else if (sel.length < 2) { s.dimScores[dimId] = 0; }
+  const cnt   = document.getElementById(`dcnt-${stepId}`);
+  const chips = document.getElementById(`dchips-${stepId}`);
+  const rows  = document.getElementById(`dsrows-${stepId}`);
+  const card  = document.getElementById(`sc-${stepId}`);
+  if (cnt)   cnt.textContent   = `${selectedDims(s).length} / 2`;
+  if (chips) chips.innerHTML   = dimChipsHTML(s);
+  if (rows)  rows.innerHTML    = dimScoreRowsHTML(s);
+  if (card)  card.className    = `step-card ${cardClass(stepScore(s))}`;
+  updateSidebar();
+}
+
+function setDimScore(stepId, dimId, score) {
+  const s = steps.find(x => x.id === stepId);
+  if (!s || !(dimId in s.dimScores)) return;
+  s.dimScores[dimId] = score;
+  const word  = document.getElementById(`dsw-${stepId}-${dimId}`);
+  const btnsEl= document.getElementById(`dsb-${stepId}-${dimId}`);
+  const card  = document.getElementById(`sc-${stepId}`);
+  if (word) { word.textContent = SCORE_WORDS[String(score)] || 'Neutral'; word.className = `dim-score-word ${wordClass(score)}`; }
+  if (btnsEl) btnsEl.innerHTML = SCORE_VALS.map(v => {
+    let cls = 'score-btn';
+    if (v === score) cls += v > 0 ? ' sb-pos' : v < 0 ? ' sb-neg' : ' sb-zer';
+    return `<button class="${cls}" onclick="setDimScore(${stepId},'${dimId}',${v})">${v > 0 ? '+' : ''}${v}</button>`;
+  }).join('');
+  if (card) card.className = `step-card ${cardClass(stepScore(s))}`;
+  updateSidebar();
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+function resetAll() {
+  if (steps.length && !confirm('Reset the journey? This cannot be undone.')) return;
+  steps = []; uid = 1;
+  document.getElementById('journeyName').value = 'Untitled Journey';
+  renderSteps();
+  updateSidebar();
+}
+
+function loadSample() {
+  steps = []; uid = 1;
+  document.getElementById('journeyName').value = 'AI Onboarding Flow';
+  [
+    { name: 'Landing Page Discovery',  desc: 'First impression through search, referral, or ad. Brand trust and social proof matter.',       dimScores: { transparency: 2, belonging: 1   } },
+    { name: 'Sign-up Form',            desc: 'User creates an account. Friction depends on fields required and perceived value.',             dimScores: { reliability: -1, fairness: -2   } },
+    { name: 'Email Verification',      desc: 'Confirmation step that interrupts momentum. Often perceived as a barrier with no benefit.',     dimScores: { reliability: -2, agency: -3     } },
+    { name: 'AI Onboarding Assistant', desc: 'AI-guided setup experience. High trust potential if transparent and genuinely helpful.',        dimScores: { transparency: 3, agency: 2      } },
+    { name: 'Personalization Prompts', desc: 'System asks for preferences. Agency depends on how optional this feels.',                      dimScores: { agency: -1, fairness: -1        } },
+    { name: 'Data Sharing Request',    desc: 'App requests permissions or data access. Trust erodes quickly if purpose is unclear.',          dimScores: { fairness: -2, agency: -2        } },
+    { name: 'Feature Discovery',       desc: 'User explores core functionality. Belonging increases when content reflects their context.',    dimScores: { reliability: 2, belonging: 2    } },
+    { name: 'First Value Moment',      desc: 'The moment the product delivers on its core promise. Critical trust-building point.',          dimScores: { reliability: 3, transparency: 2 } },
+  ].forEach(d => steps.push({ id: uid++, ...d }));
+  renderSteps();
+  updateSidebar();
+}
+
+/* ===================== EXPORT ===================== */
+
+function copySummary() {
+  const jName = document.getElementById('journeyName').value || 'Untitled Journey';
+  const b     = calcBalance();
+  const line  = '─'.repeat(44);
+  let txt = `TRUST DEBT AUDIT · ${jName.toUpperCase()}\n${line}\n`;
+  txt += `Trust Balance: ${b > 0 ? '+' : ''}${b} · ${profileLabel(b)}\n\n`;
+
+  txt += `JOURNEY STEPS (${steps.length})\n`;
+  steps.forEach((s, i) => {
+    const sc   = Math.round(stepScore(s) * 10) / 10;
+    const sign = sc > 0 ? '+' : '';
+    txt += `\n${numBadge(i)}  ${s.name || '(unnamed)'}  [${sign}${sc}]\n`;
+    if (s.desc) txt += `    ${s.desc}\n`;
+    const dims = selectedDims(s).map(d => {
+      const dim = DIMS.find(x => x.id === d);
+      const v   = s.dimScores[d];
+      return dim ? `${dim.label}: ${v > 0 ? '+' : ''}${v}` : '';
+    }).filter(Boolean);
+    if (dims.length) txt += `    ${dims.join(' · ')}\n`;
+  });
+
+  const frictions = steps.filter(s => stepScore(s) < 0).sort((a,b) => stepScore(a)-stepScore(b)).slice(0,3);
+  if (frictions.length) {
+    txt += `\nTOP FRICTION POINTS\n`;
+    frictions.forEach(s => { txt += `  • ${s.name || '(unnamed)'}  [${Math.round(stepScore(s)*10)/10}]\n`; });
+  }
+
+  const risk = getDimRisk().filter(d => d.neg > 0);
+  if (risk.length) {
+    txt += `\nDIMENSION RISK\n`;
+    risk.forEach(d => { txt += `  • ${d.label}: ${d.neg} of ${d.total} step${d.total > 1 ? 's' : ''} in friction\n`; });
+  }
+
+  const insight = generateInsight();
+  if (insight) txt += `\nINSIGHT\n${insight}\n`;
+
+  txt += `\n${line}\nGenerated with Trust Debt Audit · Dr. Larysa King · linkedin.com/in/drlarysaking\n`;
+
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById('copyBtn');
+    if (!btn) return;
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.style.color = '#2E8B6F';
+    btn.style.borderColor = '#2E8B6F';
+    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+  }).catch(() => alert('Unable to copy. Please select and copy manually.'));
+}
+
+/* ===================== INIT ===================== */
+
+if (!loadState()) {
+  // fresh start — nothing to do
+}
+renderSteps();
+updateSidebar();
+</script>
+</body>
+</html>
