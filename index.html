@@ -384,14 +384,14 @@ body {
 .add-step-btn {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   width: 100%; padding: 14px;
-  border: 1px dashed var(--mist);
-  background: transparent;
-  color: var(--stone);
+  border: 1px dashed var(--stone);
+  background: var(--parchment);
+  color: var(--warm-gray);
   font-family: inherit; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
   cursor: pointer;
   transition: all 0.15s;
 }
-.add-step-btn:hover { border-color: var(--ink); color: var(--ink); background: var(--parchment); }
+.add-step-btn:hover { border-color: var(--ink); color: var(--white); background: var(--ink); }
 
 /* ===== FOOTER ===== */
 .app-footer {
@@ -1148,9 +1148,7 @@ function copySummary() {
 
 /* ===================== INIT ===================== */
 
-if (!loadState()) {
-  // fresh start — nothing to do
-}
+// always start blank — use Sample button to load demo data
 renderSteps();
 updateSidebar();
 </script>
